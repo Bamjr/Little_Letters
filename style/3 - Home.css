@@ -5,29 +5,29 @@
 }
 
 .desktop-home {
-  background: #ffe9e9;
   display: flex;
   flex-direction: row;
-  gap: 0px;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 1024px;
+  min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow: visible; 
 }
 
 .sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+
   background: #f4a9a9;
-  padding: 25px 0px 25px 0px;
+  padding: 25px 0;
+
   display: flex;
   flex-direction: column;
-  gap: 0px;
   align-items: center;
-  justify-content: center;
-  align-self: stretch;
   flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
+  width: 90px;           
+  overflow: visible; 
 }
 
 .logo {
@@ -319,4 +319,139 @@
   position: absolute;
   left: 1044px;
   top: 569px;
+}
+
+.feed {
+  padding: 0 30px 30px;
+  width: 100%;
+}
+
+.feed__header {
+  padding: 0 0 14px;
+}
+
+.feed__title {
+  font-size: 26px;
+  font-weight: 800;
+  opacity: 0.9;
+}
+
+.feed__sub {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0.65;
+}
+
+.feed__error {
+  background: rgba(242, 242, 242, 0.55);
+  border: 2px solid rgba(89, 37, 37, 0.25);
+  border-radius: 18px;
+  padding: 16px;
+  font-weight: 800;
+}
+
+.quote-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1200px) {
+  .quote-grid { grid-template-columns: repeat(3, minmax(180px, 1fr)); }
+}
+@media (max-width: 900px) {
+  .quote-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); }
+}
+@media (max-width: 520px) {
+  .feed { padding: 0 16px 20px; }
+  .quote-grid { grid-template-columns: 1fr; }
+}
+
+.quote-card {
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+
+  background: rgba(242,242,242,0.45);
+  outline: none;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+  min-height: 260px;
+}
+
+.quote-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(0,0,0,0.14);
+}
+
+.quote-card:focus-visible {
+  box-shadow: 0 0 0 3px rgba(122, 59, 59, 0.35), 0 16px 34px rgba(0,0,0,0.14);
+}
+
+.quote-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05);
+}
+
+.quote-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+  gap: 6px;
+  padding: 14px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0.15),
+    rgba(0,0,0,0.02)
+  );
+}
+
+.quote-card__text {
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.25;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.quote-card__author {
+  color: rgba(255,255,255,0.85);
+  font-weight: 800;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+/* Skeleton state */
+.quote-card--skeleton {
+  background: #cacaca;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.quote-card--skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-60%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: shimmer 1.1s infinite;
+}
+@keyframes shimmer {
+  100% { transform: translateX(60%); }
 }

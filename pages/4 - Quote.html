@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../style/4 - Quote.css" />
+</head>
+
+<body>
+  <main class="quote-page">
+    <header class="quote-topbar">
+      <button class="icon-btn" id="backBtn" type="button" aria-label="Back">
+        <i data-lucide="arrow-left"></i>
+      </button>
+
+      <div class="quote-topbar__title">Quote</div>
+
+      <button class="icon-btn" id="copyBtn" type="button" aria-label="Copy quote">
+        <i data-lucide="copy"></i>
+      </button>
+    </header>
+
+    <section class="quote-stage" aria-label="Quote image">
+      <img id="fullImg" class="quote-img" alt="Full quote image" />
+    </section>
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Quote detail">
+      <div class="modal__card">
+        <button class="modal__close" id="closeBtn" type="button" aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal__quote" id="qText">…</div>
+        <div class="modal__author" id="qAuthor">…</div>
+
+        <div class="modal__actions">
+          <button class="primary-btn" id="newBtn" type="button">New quotes</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    const backBtn = document.getElementById("backBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const newBtn = document.getElementById("newBtn");
+
+    const modal = document.getElementById("modal");
+    const fullImg = document.getElementById("fullImg");
+    const qText = document.getElementById("qText");
+    const qAuthor = document.getElementById("qAuthor");
+
+    function safeJsonParse(s) {
+      try { return JSON.parse(s); } catch { return null; }
+    }
+
+    const payload = safeJsonParse(sessionStorage.getItem("selectedQuote") || "");
+
+    if (!payload) {
+      
+      window.location.href = "3 - Home.html";
+    } else {
+      fullImg.src = payload.img;
+      qText.textContent = `“${payload.quote || "…"}”`;
+      qAuthor.textContent = payload.author ? `— ${payload.author}` : "— Unknown";
+      modal.classList.add("modal--open");
+    }
+
+    backBtn.addEventListener("click", () => window.location.href = "3 - Home.html");
+
+    closeBtn.addEventListener("click", () => modal.classList.remove("modal--open"));
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("modal--open");
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      if (!payload) return;
+      const text = `${payload.quote || ""} — ${payload.author || "Unknown"}`;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.innerHTML = '<i data-lucide="check"></i>';
+        lucide.createIcons();
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i data-lucide="copy"></i>';
+          lucide.createIcons();
+        }, 900);
+      } catch {
+        alert("Copy ไม่ได้ (browser/block permission)");
+      }
+    });
+
+    newBtn.addEventListener("click", () => window.location.href = "3 - Home.html");
+  </script>
+</body>
+</html>

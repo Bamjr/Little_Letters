@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login</title>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
 
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 
 
-        <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-        <link rel="stylesheet" href="../style/3 - Home.css" />
-    </head>
+    <link rel="stylesheet" href="../style/3 - Home.css" />
+</head>
 
-    <body>
-        <div class="desktop-home">
+<body>
+    <div class="desktop-home">
         <div class="sidebar">
             <div class="logo">
                 <img class="rectangle-21" src="../src/images/little-letters-10.png" />
@@ -35,33 +35,122 @@
         </div>
         <div class="main">
             <div class="search-bar">
-            <div class="searchbox">
-                <i data-lucide="search"></i>
-                <div class="search2">Search</div>
+                <div class="searchbox">
+                    <i data-lucide="search"></i>
+                    <div class="search2">Search</div>
+                </div>
+                <div class="profile">
+                    <img class="rectangle-11" src="../src/images/208039796_997887741028929_7131913590550110546_n.jpg" />
+                </div>
             </div>
-            <div class="profile">
-                <img class="rectangle-11" src="../src/images/208039796_997887741028929_7131913590550110546_n.jpg" />
-            </div>
-            </div>
-            <div class="skeleton">
-            <div class="group-14">
-                <div class="rectangle-12"></div>
-                <div class="rectangle-16"></div>
-                <div class="rectangle-13"></div>
-                <div class="rectangle-17"></div>
-                <div class="rectangle-14"></div>
-                <div class="rectangle-18"></div>
-                <div class="rectangle-20"></div>
-                <div class="rectangle-15"></div>
-                <div class="rectangle-19"></div>
-            </div>
-            </div>
-        </div>
-        </div>
+            <section class="feed" aria-label="Quote feed">
+                <div class="feed__header">
+                    <h2 class="feed__title">Quotes</h2>
+                    <p class="feed__sub">Tap a card to open the full quote ✨</p>
+                </div>
 
-    </body>
-        <script>
-            lucide.createIcons();
-        </script>
+                <div id="quoteGrid" class="quote-grid" aria-live="polite">
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                    <div class="quote-card quote-card--skeleton"></div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</body>
+<script>
+     lucide.createIcons();
+
+  const API_URL = "https://quoteslate.vercel.app/api/quotes/random?count=12"; // ดึงทีเดียวหลายอัน ลด request
+
+  const grid = document.getElementById("quoteGrid");
+
+  function hashToSeed(str) {
+    // แฮชแบบเบา ๆ ให้ได้ seed เสถียรจากข้อความ (ไว้ผูกกับรูป)
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0).toString(16);
+  }
+
+  function imgUrlForQuote(q) {
+    // ใช้ picsum เป็นรูปสุ่มตาม seed (ไม่ต้องใช้ API key)
+    const seed = hashToSeed((q.quote || "") + "|" + (q.author || ""));
+    return `https://picsum.photos/seed/${seed}/800/1100`;
+  }
+
+  function escapeHtml(s = "") {
+    return s.replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[c]));
+  }
+
+  function renderQuotes(quotes) {
+    grid.innerHTML = "";
+
+    quotes.forEach((q) => {
+      const img = imgUrlForQuote(q);
+
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "quote-card";
+      card.setAttribute("aria-label", "Open quote");
+
+      card.innerHTML = `
+        <img class="quote-card__img" src="${img}" alt="Quote image" loading="lazy" />
+        <div class="quote-card__overlay">
+          <div class="quote-card__text">“${escapeHtml(q.quote || "…")}”</div>
+          <div class="quote-card__author">${escapeHtml(q.author || "Unknown")}</div>
+        </div>
+      `;
+
+      card.addEventListener("click", () => {
+        // ส่งข้อมูลไปหน้า quote page แบบไม่ยัด URL ให้ยาว
+        const payload = { ...q, img };
+        sessionStorage.setItem("selectedQuote", JSON.stringify(payload));
+        window.location.href = "4 - Quote.html";
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  async function loadQuotes() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+
+      const data = await res.json();
+
+      // QuoteSlate /api/quotes/random อาจคืนเป็น array หรือ object แล้วแต่ count
+      const quotes = Array.isArray(data) ? data : (data?.quotes || [data]).filter(Boolean);
+
+      renderQuotes(quotes);
+    } catch (err) {
+      console.error(err);
+      grid.innerHTML = `
+        <div class="feed__error">
+          โหลด quote ไม่ได้ 😵‍💫<br/>
+          <small>สาเหตุที่พบบ่อย: API ล่ม / CORS / เน็ตหลุด</small>
+        </div>
+      `;
+    }
+  }
+
+  loadQuotes();
+</script>
 
 </html>
