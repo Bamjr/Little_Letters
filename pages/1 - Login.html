@@ -1,69 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../style/1 - Login.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../style/1 - Login.css" />
 </head>
+
 <body>
-    <div class="desktop-login">
-    <div class="card">
-        <img class="little-letters-1" src="little-letters-10.png" />
-        <div class="welcome-back">Welcome back</div>
-        <div class="please-enter-your-details-to-sign-in">
-        Please enter your details to sign in.
+  <main class="login-page">
+    <section class="login-card">
+
+      <img class="login-logo" src="../src/images/little-letters-10.png" alt="Logo" />
+
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-subtitle">Please enter your details to sign in.</p>
+
+      <!-- Google Button -->
+      <button class="google-btn" type="button">
+        <img src="../src/images/google-logo0.png" alt="Google" />
+        Continue with Google
+      </button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span>OR</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <form class="login-form">
+
+        <div class="field">
+          <label for="email">E-Mail Address</label>
+          <input id="email" type="email" placeholder="Enter your email" required />
         </div>
-        <div class="other-medthods">
-        <div class="google-1">
-            <img class="google-logo" src="google-logo0.png" />
+
+        <div class="field">
+          <label for="password">Password</label>
+
+          <div class="password-wrapper">
+            <input id="password" type="password" placeholder="Enter your password" required />
+
+            <!-- Lucide icon -->
+            <button type="button" class="toggle-password" aria-label="Show password">
+              <i data-lucide="eye"></i>
+            </button>
+          </div>
         </div>
-        <div class="google-2">
-            <img class="google-logo" src="google-logo1.png" />
+
+        <div class="form-options">
+          <label class="remember">
+            <input type="checkbox" />
+            Remember me
+          </label>
+
+          <a href="#" class="forgot">Forgot password?</a>
         </div>
-        <div class="google-3">
-            <img class="google-logo" src="google-logo2.png" />
-        </div>
-        </div>
-        <div class="or">
-        <div class="line"></div>
-        <div class="or2">OR</div>
-        <div class="line"></div>
-        </div>
-        <div class="information">
-        <div class="e-mail">
-            <div class="e-mail-address">E-Mail Address</div>
-            <div class="enter-your-email">
-            <div class="enter-your-email2">Enter your email</div>
-            </div>
-        </div>
-        <div class="password">
-            <div class="password2">Password</div>
-            <div class="enter-your-password">
-            <div class="enter-you-password">Enter your password</div>
-            <img class="eye" src="eye0.svg" />
-            </div>
-        </div>
-        </div>
-        <div class="choice">
-        <div class="rememerme">
-            <div class="rectangle-47"></div>
-            <div class="rememer-me">Rememer me</div>
-        </div>
-        <div class="frame-1">
-            <div class="forgot-password">Forgot password?</div>
-        </div>
-        </div>
-        <div class="sign-in-button">
-        <div class="frame-3">
-            <div class="sign-in">Sign in</div>
-        </div>
-        </div>
-        <div class="frame-4">
-        <div class="don-t-have-an-account-yet">Don’t have an account yet?</div>
-        <div class="sign-up">Sign up</div>
-        </div>
-    </div>
-    </div>
+
+        <button class="signin-btn" type="submit">Sign in</button>
+      </form>
+
+      <div class="signup">
+        <span>Don’t have an account yet?</span>
+        <a href="#">Sign up</a>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // initialize lucide icons
+    lucide.createIcons();
+
+    const toggleBtn = document.querySelector(".toggle-password");
+    const passwordInput = document.getElementById("password");
+
+    toggleBtn.addEventListener("click", () => {
+      const isPassword = passwordInput.type === "password";
+
+      passwordInput.type = isPassword ? "text" : "password";
+
+      // change icon
+      toggleBtn.innerHTML = isPassword
+        ? '<i data-lucide="eye-off"></i>'
+        : '<i data-lucide="eye"></i>';
+
+      lucide.createIcons();
+    });
+  </script>
+
 </body>
 </html>
