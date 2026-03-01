@@ -16,17 +16,17 @@ https://bamjr.github.io/Little_Letters/
 
 ## Features
 
--   Display random quotes from an external API\
--   Clickable quote cards with a full quote view page\
--   Add your own quote (demo submission)\
--   Basic demo login system (frontend only)\
+-   Display random quotes from an external API
+-   Clickable quote cards with a full quote view page
+-   Add your own quote (demo submission)
+-   Basic demo login system (frontend only)
 -   Responsive layout for different screen sizes
 
 ## Demo Login
 
 To access the Home page, please use the following credentials on login page:
 
-Email: 0000@bodin.ac.th\
+Email: 0000@bodin.ac.th
 Password: lookbodin
 
 Note: This login system is hardcoded for demonstration purposes only.
