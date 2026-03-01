@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Quote</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;800&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../style/5 - Add.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="desktop-add">
+
+        <div class="sidebar">
+            <div class="logo">
+                <img class="rectangle-21" src="../src/images/little-letters-10.png" />
+            </div>
+
+            <div class="button">
+                <button class="nav-btn" type="button" aria-label="Home" onclick="location.href='3 - Home.html'">
+                    <i data-lucide="house"></i>
+                </button>
+
+                <button class="nav-btn" type="button" aria-label="Explore">
+                    <i data-lucide="compass"></i>
+                </button>
+
+                <button class="nav-btn is-active" id="addBtn" type="button" aria-label="Create">
+                    <i data-lucide="square-plus"></i>
+                </button>
+
+                <button class="nav-btn" type="button" aria-label="Notifications">
+                    <i data-lucide="bell"></i>
+                </button>
+            </div>
+
+            <button class="nav-btn nav-btn--bottom" type="button" aria-label="Settings">
+                <i data-lucide="settings"></i>
+            </button>
+        </div>
+
+
+        <main class="main">
+
+            <div class="search-bar">
+                <div class="searchbox">
+                    <i data-lucide="search"></i>
+                    <input class="search-input" type="search" placeholder="Search" />
+                </div>
+
+                <div class="profile">
+                    <img class="rectangle-11" src="../src/images/208039796_997887741028929_7131913590550110546_n.jpg" />
+                </div>
+            </div>
+
+
+            <section class="page-title">
+                <h1>Add your own quote</h1>
+                <div class="divider"></div>
+            </section>
+
+            <!-- content grid -->
+            <section class="content">
+                <!-- upload card -->
+                <section class="card upload-card" aria-label="Upload image">
+                    <div class="upload-preview" id="previewBox">
+                        <img id="previewImg" alt="" />
+                        <div class="upload-preview__empty" id="previewEmpty">
+                            <div class="upload-preview__hint">Drop image here</div>
+                            <div class="upload-preview__sub">or click “Choose image”</div>
+                        </div>
+                    </div>
+
+                    <div class="upload-actions">
+                        <input id="imageInput" class="file-input" type="file" accept="image/png,image/jpeg" />
+                        <button class="btn" id="chooseBtn" type="button">Choose image</button>
+                        <button class="btn btn--ghost" id="removeBtn" type="button" disabled>Remove</button>
+                    </div>
+
+                    <p class="upload-note">
+                        File type must be .jpg .jpeg .png (recommend &lt; 5MB).
+                    </p>
+                    <p class="upload-note muted">
+                        Notice: If the file has an owner, contact them for permission before uploading.
+                    </p>
+                </section>
+
+                <!-- form card -->
+                <section class="card form-card" aria-label="Add quote form">
+                    <form id="quoteForm" class="form">
+                        <label class="field">
+                            <span class="field__label">Title</span>
+                            <input class="field__control" name="title" type="text" placeholder="Add your quote’s title"
+                                maxlength="80" required />
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Quote</span>
+                            <textarea class="field__control field__control--textarea" name="quote"
+                                placeholder="Add your quote" rows="5" maxlength="600" required></textarea>
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Short description</span>
+                            <input class="field__control" name="description" type="text"
+                                placeholder="Add your short description" maxlength="140" />
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Credit</span>
+                            <input class="field__control" name="credit" type="text" placeholder="Credit the owner"
+                                maxlength="60" />
+                        </label>
+
+                        <label class="field">
+                            <span class="field__label">Genre</span>
+                            <select class="field__control" name="genre" required>
+                                <option value="" selected disabled>Choose the genre</option>
+                                <option>Motivation</option>
+                                <option>Love</option>
+                                <option>Life</option>
+                                <option>Humor</option>
+                                <option>Study</option>
+                                <option>Sad</option>
+                            </select>
+                        </label>
+
+                        <div class="form-actions">
+                            <button class="btn btn--ghost" type="reset" id="resetBtn">Clear</button>
+                            <button class="btn btn--primary" type="submit">Submit</button>
+                        </div>
+
+                        <p class="tiny muted" id="statusText"></p>
+                    </form>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const addBtn = document.getElementById("addBtn");
+        addBtn?.addEventListener("click", () => {
+            window.location.href = "5 - Add.html"; // หรือชื่อไฟล์ add ที่แบมใช้จริง
+        });
+        const form = document.getElementById("quoteForm");
+        const statusText = document.getElementById("statusText");
+
+        const imageInput = document.getElementById("imageInput");
+        const chooseBtn = document.getElementById("chooseBtn");
+        const removeBtn = document.getElementById("removeBtn");
+
+        const previewBox = document.getElementById("previewBox");
+        const previewImg = document.getElementById("previewImg");
+        const previewEmpty = document.getElementById("previewEmpty");
+
+        let selectedFile = null;
+
+
+        function isValidImage(file) {
+            const okType = ["image/jpeg", "image/png"].includes(file.type);
+            // แนะนำ < 5MB สำหรับ UX (แม้เธอจะเขียน 200MB ได้ แต่เว็บจะหนักมาก)
+            const okSize = file.size <= 5 * 1024 * 1024;
+            return { okType, okSize };
+        }
+
+        function setPreviewFromFile(file) {
+            const url = URL.createObjectURL(file);
+
+            previewImg.src = url;
+            previewImg.alt = "Uploaded image preview";
+
+            previewBox.classList.add("is-has-image");
+            previewEmpty.style.display = "none";
+
+            removeBtn.disabled = false;
+        }
+
+        function clearPreview() {
+
+            if (previewImg.src?.startsWith("blob:")) {
+                URL.revokeObjectURL(previewImg.src);
+            }
+
+            previewImg.removeAttribute("src");
+            previewImg.alt = "";
+            previewBox.classList.remove("is-has-image");
+            previewEmpty.style.display = "grid";
+
+            imageInput.value = "";
+            selectedFile = null;
+            removeBtn.disabled = true;
+        }
+
+        function setStatus(msg) {
+            statusText.textContent = msg || "";
+        }
+
+
+        chooseBtn.addEventListener("click", () => imageInput.click());
+
+        removeBtn.addEventListener("click", () => {
+            clearPreview();
+            setStatus("Image removed.");
+        });
+
+        imageInput.addEventListener("change", (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            const { okType, okSize } = isValidImage(file);
+
+            if (!okType) {
+                alert("Please upload .jpg, .jpeg, or .png only.");
+                imageInput.value = "";
+                return;
+            }
+
+            if (!okSize) {
+                alert("Image too large. Please use an image under 5MB for better performance.");
+                imageInput.value = "";
+                return;
+            }
+
+            selectedFile = file;
+            setPreviewFromFile(file);
+            setStatus(`Selected: ${file.name}`);
+        });
+
+
+        previewBox.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            previewBox.style.outline = "4px solid rgba(89, 37, 37, 0.18)";
+        });
+
+        previewBox.addEventListener("dragleave", () => {
+            previewBox.style.outline = "none";
+        });
+
+        previewBox.addEventListener("drop", (e) => {
+            e.preventDefault();
+            previewBox.style.outline = "none";
+
+            const file = e.dataTransfer.files?.[0];
+            if (!file) return;
+
+            const { okType, okSize } = isValidImage(file);
+            if (!okType) return alert("Drop a .jpg/.jpeg/.png only.");
+            if (!okSize) return alert("Image too large. Use under 5MB.");
+
+            selectedFile = file;
+            setPreviewFromFile(file);
+            setStatus(`Dropped: ${file.name}`);
+        });
+
+
+        form.addEventListener("reset", () => {
+            clearPreview();
+            setStatus("");
+        });
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const data = new FormData(form);
+
+
+            const title = (data.get("title") || "").toString().trim();
+            const quote = (data.get("quote") || "").toString().trim();
+            const genre = (data.get("genre") || "").toString().trim();
+
+            if (!title || !quote || !genre) {
+                alert("Please fill Title, Quote, and Genre.");
+                return;
+            }
+
+
+            setStatus("Submitting...");
+            const payload = {
+                title,
+                quote,
+                description: (data.get("description") || "").toString().trim(),
+                credit: (data.get("credit") || "").toString().trim(),
+                genre,
+                image: selectedFile ? { name: selectedFile.name, type: selectedFile.type, size: selectedFile.size } : null,
+                createdAt: new Date().toISOString(),
+            };
+
+            setTimeout(() => {
+                console.log("FAKE SUBMIT payload:", payload);
+                alert("✅ Submitted successfully!");
+                form.reset();
+            }, 500);
+        });
+
+
+    </script>
+</body>
+
+</html>

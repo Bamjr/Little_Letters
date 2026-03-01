@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Home</title>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
                     <i data-lucide="compass"></i>
                 </button>
 
-                <button class="nav-btn" type="button" aria-label="Create">
+                <button class="nav-btn" id="addBtn" type="button" aria-label="Create">
                     <i data-lucide="square-plus"></i>
                 </button>
 
@@ -44,13 +44,13 @@
             <button class="nav-btn nav-btn--bottom" type="button" aria-label="Settings">
                 <i data-lucide="settings"></i>
             </button>
-           
+
         </div>
         <div class="main">
             <div class="search-bar">
                 <div class="searchbox">
                     <i data-lucide="search"></i>
-                    <div class="search2">Search</div>
+                    <input class="search2 search-input" type="search" placeholder="Search" />
                 </div>
                 <div class="profile">
                     <img class="rectangle-11" src="../src/images/208039796_997887741028929_7131913590550110546_n.jpg" />
@@ -80,6 +80,11 @@
 </body>
 <script>
     lucide.createIcons();
+
+    const addBtn = document.getElementById("addBtn");
+    addBtn?.addEventListener("click", () => {
+        window.location.href = "5 - Add.html"; // หรือชื่อไฟล์ add ที่แบมใช้จริง
+    });
 
     const API_URL = "https://quoteslate.vercel.app/api/quotes/random?count=12"; // ดึงทีเดียวหลายอัน ลด request
 

@@ -480,7 +480,7 @@
   opacity: 0.95;
 }
 
-/* Skeleton state */
+
 .quote-card--skeleton {
   background: #cacaca;
   border-radius: 20px;
@@ -494,6 +494,20 @@
   transform: translateX(-60%);
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
   animation: shimmer 1.1s infinite;
+}
+
+.searchbox .search2.search-input{
+  width: 100%;
+  height: auto;
+  border: 0;
+  outline: none;
+  background: transparent;
+  display: block;
+}
+
+.searchbox .search2.search-input::placeholder{
+  color: rgba(0,0,0,0.65);
+  opacity: 1;
 }
 @keyframes shimmer {
   100% { transform: translateX(60%); }
