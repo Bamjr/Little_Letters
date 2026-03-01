@@ -1,4 +1,4 @@
-# Little Letters
+# Little Letters ✉️
 
 Little Letters is a simple web application for browsing and collecting
 quotes from around the internet. The website displays random quotes in a
@@ -33,8 +33,8 @@ Note: This login system is hardcoded for demonstration purposes only.
 
 ## Built With
 
--   HTML\
--   CSS\
+-   HTML
+-   CSS
 -   JavaScript
 
 ## Note
