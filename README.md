@@ -26,7 +26,7 @@ https://bamjr.github.io/Little_Letters/
 
 To access the Home page, please use the following credentials on login page:
 
-Email: 0000@bodin.ac.th
+Email: 0000@bodin.ac.th/
 Password: lookbodin
 
 Note: This login system is hardcoded for demonstration purposes only.
