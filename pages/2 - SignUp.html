@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="stylesheet" href="../style/2 - SignUp.css" />
+</head>
+
+<body>
+  <main class="auth-page">
+    <section class="auth-card" aria-label="Sign up form">
+
+      <img class="auth-logo" src="../src/images/little-letters-10.png" alt="Logo" />
+
+      <h1 class="auth-title">Create an account</h1>
+      <p class="auth-subtitle">Please enter your details to sign up.</p>
+
+     
+      <button class="social-btn" type="button">
+        <img class="social-btn__icon" src="../src/images/google-logo0.png" alt="Google" />
+        <span class="social-btn__text">Continue with Google</span>
+      </button>
+
+      <div class="divider" role="separator" aria-label="or">
+        <div class="divider__line"></div>
+        <span class="divider__text">OR</span>
+        <div class="divider__line"></div>
+      </div>
+
+      <form class="auth-form" action="#" method="post">
+
+        <div class="field">
+          <label class="field__label" for="email">E-Mail Address</label>
+          <input
+            class="field__input"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="password">Password</label>
+          <div class="password">
+            <input
+              class="field__input password__input"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Create a password"
+              autocomplete="new-password"
+              required
+            />
+            <button class="password__toggle" type="button" data-target="#password" aria-label="Show password">
+              <i data-lucide="eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="confirmPassword">Confirm Password</label>
+          <div class="password">
+            <input
+              class="field__input password__input"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              required
+            />
+            <button class="password__toggle" type="button" data-target="#confirmPassword" aria-label="Show password">
+              <i data-lucide="eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="checkbox">
+            <input class="checkbox__input" type="checkbox" required />
+            <span class="checkbox__box" aria-hidden="true"></span>
+            <span class="checkbox__text">
+              I agree to the
+              <a class="link" href="#">Terms &amp; Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+
+        <button class="primary-btn" type="submit">Sign up</button>
+      </form>
+
+      <p class="bottom-text">
+        <span>Already have an account?</span>
+        <a class="link link--strong" href="1 - Login.html">Log in</a>
+      </p>
+
+    </section>
+  </main>
+
+  <script>
+
+    lucide.createIcons();
+
+   
+    document.querySelectorAll(".password__toggle").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetSelector = btn.getAttribute("data-target");
+        const input = document.querySelector(targetSelector);
+        const isPassword = input.type === "password";
+
+        input.type = isPassword ? "text" : "password";
+
+        btn.innerHTML = isPassword
+          ? '<i data-lucide="eye-off"></i>'
+          : '<i data-lucide="eye"></i>';
+
+        btn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+        lucide.createIcons();
+      });
+    });
+  </script>
+</body>
+</html>
