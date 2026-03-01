@@ -1,108 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
 
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
 
-    <link rel="stylesheet" href="../style/1 - Login.css" />
-</head>
+        <link rel="stylesheet" href="../style/1 - Login.css" />
+    </head>
 
-<body>
-    <main class="auth-page">
-        <section class="auth-card" aria-label="Login form">
+    <body>
+        <main class="auth-page">
+            <section class="auth-card" aria-label="Login form">
 
-            <img class="auth-logo" src="../src/images/little-letters-10.png" alt="Logo" />
+                <img class="auth-logo" src="../src/images/little-letters-10.png" alt="Logo" />
 
-            <h1 class="auth-title">Welcome back</h1>
-            <p class="auth-subtitle">Please enter your details to sign in.</p>
+                <h1 class="auth-title">Welcome back</h1>
+                <p class="auth-subtitle">Please enter your details to sign in.</p>
 
 
-            <button class="social-btn" type="button">
-                <img class="social-btn__icon" src="../src/images/google-logo0.png" alt="Google" />
-                <span class="social-btn__text">Continue with Google</span>
-            </button>
+                <button class="social-btn" type="button">
+                    <img class="social-btn__icon" src="../src/images/google-logo0.png" alt="Google" />
+                    <span class="social-btn__text">Continue with Google</span>
+                </button>
 
-            <div class="divider" role="separator" aria-label="or">
-                <div class="divider__line"></div>
-                <span class="divider__text">OR</span>
-                <div class="divider__line"></div>
-            </div>
-
-            <form class="auth-form" action="#" method="post">
-
-                <div class="field">
-                    <label class="field__label" for="email">E-Mail Address</label>
-                    <input class="field__input" id="email" name="email" type="email" placeholder="Enter your email"
-                        autocomplete="email" required />
+                <div class="divider" role="separator" aria-label="or">
+                    <div class="divider__line"></div>
+                    <span class="divider__text">OR</span>
+                    <div class="divider__line"></div>
                 </div>
 
-                <div class="field">
-                    <label class="field__label" for="password">Password</label>
+                <form class="auth-form" action="#" method="post">
 
-                    <div class="password">
-                        <input class="field__input password__input" id="password" name="password" type="password"
-                            placeholder="Enter your password" autocomplete="current-password" required />
-
-                        <button class="password__toggle" type="button" data-target="#password"
-                            aria-label="Show password">
-                            <i data-lucide="eye"></i>
-                        </button>
+                    <div class="field">
+                        <label class="field__label" for="email">E-Mail Address</label>
+                        <input class="field__input" id="email" name="email" type="email" placeholder="Enter your email"
+                            autocomplete="email" required />
                     </div>
-                </div>
 
-                <div class="form-options">
-                    <label class="remember">
-                        <input class="remember__input" type="checkbox" name="remember" />
-                        <span class="remember__box" aria-hidden="true"></span>
-                        <span class="remember__text">Remember me</span>
-                    </label>
+                    <div class="field">
+                        <label class="field__label" for="password">Password</label>
 
-                    <a href="#" class="link">Forgot password?</a>
-                </div>
+                        <div class="password">
+                            <input class="field__input password__input" id="password" name="password" type="password"
+                                placeholder="Enter your password" autocomplete="current-password" required />
 
-                <button class="primary-btn" type="submit">Sign in</button>
-            </form>
+                            <button class="password__toggle" type="button" data-target="#password"
+                                aria-label="Show password">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+                    </div>
 
-            <p class="bottom-text">
-                <span>Don’t have an account yet?</span>
-                <a class="link link--strong" href="2 - SignUp.html">Sign up</a>
-            </p>
+                    <div class="form-options">
+                        <label class="remember">
+                            <input class="remember__input" type="checkbox" name="remember" />
+                            <span class="remember__box" aria-hidden="true"></span>
+                            <span class="remember__text">Remember me</span>
+                        </label>
 
-        </section>
-    </main>
+                        <a href="#" class="link">Forgot password?</a>
+                    </div>
 
-    <script>
-        lucide.createIcons();
+                    <button class="primary-btn" type="submit">Sign in</button>
+                </form>
+
+                <p class="bottom-text">
+                    <span>Don’t have an account yet?</span>
+                    <a class="link link--strong" href="2 - SignUp.html">Sign up</a>
+                </p>
+
+            </section>
+        </main>
+
+        <script>
+            lucide.createIcons();
 
 
-        document.querySelectorAll(".password__toggle").forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const targetSelector = btn.getAttribute("data-target");
-                const input = document.querySelector(targetSelector);
-                const isPassword = input.type === "password";
+            document.querySelectorAll(".password__toggle").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const targetSelector = btn.getAttribute("data-target");
+                    const input = document.querySelector(targetSelector);
+                    const isPassword = input.type === "password";
 
-                input.type = isPassword ? "text" : "password";
+                    input.type = isPassword ? "text" : "password";
 
-                btn.innerHTML = isPassword
-                    ? '<i data-lucide="eye-off"></i>'
-                    : '<i data-lucide="eye"></i>';
+                    btn.innerHTML = isPassword
+                        ? '<i data-lucide="eye-off"></i>'
+                        : '<i data-lucide="eye"></i>';
 
-                btn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
-                lucide.createIcons();
+                    btn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+                    lucide.createIcons();
+                });
             });
-        });
-    </script>
+        </script>
 
-</body>
+    </body>
 
 </html>
