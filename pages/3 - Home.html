@@ -24,14 +24,27 @@
                 <img class="rectangle-21" src="../src/images/little-letters-10.png" />
             </div>
             <div class="button">
-                <div class="home">
+                <button class="nav-btn is-active" type="button" aria-label="Home">
                     <i data-lucide="house"></i>
-                </div>
-                <i data-lucide="compass"></i>
-                <i data-lucide="square-plus"></i>
-                <i data-lucide="bell"></i>
+                </button>
+
+                <button class="nav-btn" type="button" aria-label="Explore">
+                    <i data-lucide="compass"></i>
+                </button>
+
+                <button class="nav-btn" type="button" aria-label="Create">
+                    <i data-lucide="square-plus"></i>
+                </button>
+
+                <button class="nav-btn" type="button" aria-label="Notifications">
+                    <i data-lucide="bell"></i>
+                </button>
             </div>
-            <i data-lucide="settings"></i>
+
+            <button class="nav-btn nav-btn--bottom" type="button" aria-label="Settings">
+                <i data-lucide="settings"></i>
+            </button>
+           
         </div>
         <div class="main">
             <div class="search-bar">
@@ -66,50 +79,50 @@
 
 </body>
 <script>
-     lucide.createIcons();
+    lucide.createIcons();
 
-  const API_URL = "https://quoteslate.vercel.app/api/quotes/random?count=12"; // ดึงทีเดียวหลายอัน ลด request
+    const API_URL = "https://quoteslate.vercel.app/api/quotes/random?count=12"; // ดึงทีเดียวหลายอัน ลด request
 
-  const grid = document.getElementById("quoteGrid");
+    const grid = document.getElementById("quoteGrid");
 
-  function hashToSeed(str) {
-    // แฮชแบบเบา ๆ ให้ได้ seed เสถียรจากข้อความ (ไว้ผูกกับรูป)
-    let h = 2166136261;
-    for (let i = 0; i < str.length; i++) {
-      h ^= str.charCodeAt(i);
-      h = Math.imul(h, 16777619);
+    function hashToSeed(str) {
+        // แฮชแบบเบา ๆ ให้ได้ seed เสถียรจากข้อความ (ไว้ผูกกับรูป)
+        let h = 2166136261;
+        for (let i = 0; i < str.length; i++) {
+            h ^= str.charCodeAt(i);
+            h = Math.imul(h, 16777619);
+        }
+        return (h >>> 0).toString(16);
     }
-    return (h >>> 0).toString(16);
-  }
 
-  function imgUrlForQuote(q) {
-    // ใช้ picsum เป็นรูปสุ่มตาม seed (ไม่ต้องใช้ API key)
-    const seed = hashToSeed((q.quote || "") + "|" + (q.author || ""));
-    return `https://picsum.photos/seed/${seed}/800/1100`;
-  }
+    function imgUrlForQuote(q) {
+        // ใช้ picsum เป็นรูปสุ่มตาม seed (ไม่ต้องใช้ API key)
+        const seed = hashToSeed((q.quote || "") + "|" + (q.author || ""));
+        return `https://picsum.photos/seed/${seed}/800/1100`;
+    }
 
-  function escapeHtml(s = "") {
-    return s.replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[c]));
-  }
+    function escapeHtml(s = "") {
+        return s.replace(/[&<>"']/g, (c) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[c]));
+    }
 
-  function renderQuotes(quotes) {
-    grid.innerHTML = "";
+    function renderQuotes(quotes) {
+        grid.innerHTML = "";
 
-    quotes.forEach((q) => {
-      const img = imgUrlForQuote(q);
+        quotes.forEach((q) => {
+            const img = imgUrlForQuote(q);
 
-      const card = document.createElement("button");
-      card.type = "button";
-      card.className = "quote-card";
-      card.setAttribute("aria-label", "Open quote");
+            const card = document.createElement("button");
+            card.type = "button";
+            card.className = "quote-card";
+            card.setAttribute("aria-label", "Open quote");
 
-      card.innerHTML = `
+            card.innerHTML = `
         <img class="quote-card__img" src="${img}" alt="Quote image" loading="lazy" />
         <div class="quote-card__overlay">
           <div class="quote-card__text">“${escapeHtml(q.quote || "…")}”</div>
@@ -117,40 +130,40 @@
         </div>
       `;
 
-      card.addEventListener("click", () => {
-        // ส่งข้อมูลไปหน้า quote page แบบไม่ยัด URL ให้ยาว
-        const payload = { ...q, img };
-        sessionStorage.setItem("selectedQuote", JSON.stringify(payload));
-        window.location.href = "4 - Quote.html";
-      });
+            card.addEventListener("click", () => {
+                // ส่งข้อมูลไปหน้า quote page แบบไม่ยัด URL ให้ยาว
+                const payload = { ...q, img };
+                sessionStorage.setItem("selectedQuote", JSON.stringify(payload));
+                window.location.href = "4 - Quote.html";
+            });
 
-      grid.appendChild(card);
-    });
-  }
+            grid.appendChild(card);
+        });
+    }
 
-  async function loadQuotes() {
-    try {
-      const res = await fetch(API_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error(`API error: ${res.status}`);
+    async function loadQuotes() {
+        try {
+            const res = await fetch(API_URL, { cache: "no-store" });
+            if (!res.ok) throw new Error(`API error: ${res.status}`);
 
-      const data = await res.json();
+            const data = await res.json();
 
-      // QuoteSlate /api/quotes/random อาจคืนเป็น array หรือ object แล้วแต่ count
-      const quotes = Array.isArray(data) ? data : (data?.quotes || [data]).filter(Boolean);
+            // QuoteSlate /api/quotes/random อาจคืนเป็น array หรือ object แล้วแต่ count
+            const quotes = Array.isArray(data) ? data : (data?.quotes || [data]).filter(Boolean);
 
-      renderQuotes(quotes);
-    } catch (err) {
-      console.error(err);
-      grid.innerHTML = `
+            renderQuotes(quotes);
+        } catch (err) {
+            console.error(err);
+            grid.innerHTML = `
         <div class="feed__error">
           โหลด quote ไม่ได้ 😵‍💫<br/>
           <small>สาเหตุที่พบบ่อย: API ล่ม / CORS / เน็ตหลุด</small>
         </div>
       `;
+        }
     }
-  }
 
-  loadQuotes();
+    loadQuotes();
 </script>
 
 </html>

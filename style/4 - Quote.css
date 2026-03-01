@@ -91,6 +91,8 @@ body {
 }
 
 .modal__close{
+  z-index: 5;
+  pointer-events: auto;
   position: absolute;
   right: 12px;
   top: 12px;
